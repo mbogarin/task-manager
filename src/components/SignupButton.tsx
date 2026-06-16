@@ -13,7 +13,11 @@ function SignupButton() {
 	};
 
 	if (!isAuthenticated)
-		return <Button onClick={handleSignup}>Sign Up</Button>;
+		return (
+			<Button className="ms-2" onClick={handleSignup}>
+				Sign Up
+			</Button>
+		);
 	return null;
 }
 

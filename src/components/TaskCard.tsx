@@ -76,7 +76,6 @@ function TaskCard({
 					onClick={(e) => {
 						e.stopPropagation();
 						onSelect(task);
-						// onView(task);
 					}}
 				>
 					View

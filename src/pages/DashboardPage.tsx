@@ -15,11 +15,7 @@ function DashboardPage() {
 	const location = useLocation();
 
 	// [AUTHENTICATION HOOKS]:
-	const {
-		isLoading, // Loading state - the SDK needs to reach Auth0 on load.
-		isAuthenticated,
-		user, // User profile.
-	} = useAuth0();
+	const { isLoading, user } = useAuth0();
 
 	// [STATE HOOKS]:
 	const authUser = user as Auth0User;
@@ -43,20 +39,6 @@ function DashboardPage() {
 	// = EARLY RETURNS:
 	if (isLoading) {
 		return <div className="container py-4">Loading...</div>;
-	}
-
-	if (!isAuthenticated || !user) {
-		return (
-			<div className="container py-5 text-center">
-				<h3>Please log in to view your tasks</h3>
-				<button
-					className="btn btn-primary mt-3"
-					onClick={() => navigate("/login")}
-				>
-					Login
-				</button>
-			</div>
-		);
 	}
 
 	// [FILTERING]:

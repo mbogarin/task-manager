@@ -44,12 +44,6 @@ function TaskDetailsPage() {
 					{task.completed ? "Completed" : "Active"}
 				</p>
 			</div>
-			{/* <button
-				className="btn btn-sm btn-outline-secondary mt-3"
-				onClick={() => navigate("/")}
-			>
-				Back to Dashboard
-			</button> */}
 
 			{/* EDIT TASK BUTTON: */}
 			<div className="d-flex gap-2 mt-3">

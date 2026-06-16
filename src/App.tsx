@@ -22,7 +22,12 @@ function App() {
 		<TaskProvider>
 			<Navbar />
 			<Routes>
-				<Route path="/" element={<DashboardPage />} />
+				<Route path="/" element={<LoginPage />} />
+				<Route path="/register" element={<RegisterPage />} />
+				<Route
+					path="/dashboard"
+					element={<AuthenticationGuard component={DashboardPage} />}
+				/>
 
 				<Route
 					path="/tasks/:id"
@@ -30,8 +35,6 @@ function App() {
 						<AuthenticationGuard component={TaskDetailsPage} />
 					}
 				/>
-				<Route path="/login" element={<LoginPage />} />
-				<Route path="/register" element={<RegisterPage />} />
 			</Routes>
 		</TaskProvider>
 	);

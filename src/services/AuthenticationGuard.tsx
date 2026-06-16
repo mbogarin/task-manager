@@ -1,17 +1,38 @@
-import { withAuthenticationRequired } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect, type ComponentType } from "react";
+import { useLocation } from "react-router-dom";
 
 type AuthenticationGuardProps = {
-	component: React.ReactNode | any;
+	component: ComponentType;
 };
 
-const AuthenticationGuard: React.FC<AuthenticationGuardProps> = ({
-	component,
-}) => {
-	const Component = withAuthenticationRequired(component, {
-		onRedirecting: () => <div>Redirecting you to the login page...</div>,
-	});
+function AuthenticationGuard({
+	component: Component,
+}: AuthenticationGuardProps) {
+	const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
+	const location = useLocation();
+
+	useEffect(() => {
+		if (!isLoading && !isAuthenticated) {
+			loginWithRedirect({
+				appState: {
+					returnTo: location.pathname + location.search,
+				},
+			});
+		}
+	}, [
+		isAuthenticated,
+		isLoading,
+		location.pathname,
+		location.search,
+		loginWithRedirect,
+	]);
+
+	if (isLoading || !isAuthenticated) {
+		return <div>Redirecting...</div>;
+	}
 
 	return <Component />;
-};
+}
 
 export default AuthenticationGuard;

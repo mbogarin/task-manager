@@ -4,11 +4,8 @@ import { Button } from "react-bootstrap";
 const LoginButton: React.FC = () => {
 	const { loginWithRedirect, isAuthenticated } = useAuth0();
 
-	const handleLogin = async () => {
-		await loginWithRedirect({
-			appState: {
-				returnTo: "/",
-			},
+	const handleLogin = () => {
+		loginWithRedirect({
 			authorizationParams: {
 				prompt: "login",
 			},

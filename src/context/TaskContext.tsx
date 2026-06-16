@@ -66,5 +66,3 @@ export function TaskProvider({ children }: { children: ReactNode }) {
 		</TaskContext.Provider>
 	);
 }
-
-// Note: `useTaskContext` has been moved to `src/context/useTaskContext.tsx`

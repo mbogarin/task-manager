@@ -14,6 +14,13 @@ createRoot(document.getElementById("root")!).render(
 			domain="dev-gr4ek5mvf8qxy3k3.us.auth0.com"
 			clientId="u66xIUb6QS6IWTM0wv4dGyOTcMI09VFc"
 			authorizationParams={{ redirect_uri: window.location.origin }}
+			onRedirectCallback={(appState) => {
+				window.history.replaceState(
+					{},
+					document.title,
+					appState?.returnTo || "/dashboard",
+				);
+			}}
 		>
 			<BrowserRouter>
 				<App />
