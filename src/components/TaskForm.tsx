@@ -11,7 +11,7 @@ type TaskFormProps = {
 	onAddTask: (task: CreateTask) => void;
 	onUpdateTask?: (task: Task) => void;
 	editingTask?: Task | null;
-	setEditingTask?: (task: Task | null) => void;
+	setEditingTask: (task: Task | null) => void;
 };
 
 function TaskForm({
@@ -41,7 +41,7 @@ function TaskForm({
 
 	function handleSubmit(e: React.FormEvent) {
 		e.preventDefault();
-		if (editingTask && onUpdateTask && setEditingTask) {
+		if (editingTask && onUpdateTask) {
 			onUpdateTask({
 				...editingTask,
 				title,

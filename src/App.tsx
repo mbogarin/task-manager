@@ -158,8 +158,7 @@ function App() {
 			{/* Task Details: */}
 			{selectedTask && (
 				<div>
-					<h2 className="mt-5">Task Details</h2>
-
+					<h4 className="mt-5">Task Details</h4>
 					<div className="card shadow-sm p-3 mb-2">
 						<p>
 							<strong>Title:</strong> {selectedTask.title}
@@ -182,7 +181,7 @@ function App() {
 					</div>
 
 					<button
-						className="mb-5 btn btn-sm btn-outline-danger"
+						className="btn btn-sm btn-outline-secondary mb-5 mt-2"
 						onClick={() => setSelectedTask(null)}
 					>
 						Close
@@ -191,19 +190,16 @@ function App() {
 			)}
 
 			{/* Task List: */}
-			<div className="row g-2">
+			<div className="d-grip gap-2">
 				{filteredTasks.map((task) => (
-					<div className="col-12" key={task.id}>
-						<TaskCard
-							task={task}
-							onDelete={deleteTask}
-							onToggle={toggleTask}
-							onEdit={(task) => {
-								setEditingTask(task);
-							}}
-							onSelect={setSelectedTask}
-						/>
-					</div>
+					<TaskCard
+						key={task.id}
+						task={task}
+						onDelete={deleteTask}
+						onToggle={toggleTask}
+						onEdit={setEditingTask}
+						onSelect={setSelectedTask}
+					/>
 				))}
 			</div>
 		</div>
