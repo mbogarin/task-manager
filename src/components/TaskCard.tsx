@@ -50,7 +50,7 @@ function TaskCard({
 
 				{/* Edit Button: */}
 				<button
-					className="btn btn-sm btn-outline-warning"
+					className="btn btn-sm btn-secondary"
 					onClick={(e) => {
 						e.stopPropagation();
 						onEdit(task);
@@ -72,7 +72,7 @@ function TaskCard({
 
 				{/* View Details Button: */}
 				<button
-					className="btn btn-sm btn-primary ms-2"
+					className="btn btn-sm btn-primary"
 					onClick={(e) => {
 						e.stopPropagation();
 						onSelect(task);

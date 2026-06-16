@@ -1,46 +1,24 @@
-import { createContext, useContext, useState } from "react";
+import { useState } from "react";
 import type { ReactNode } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import type { Auth0User } from "../types/auth";
 import type { Task } from "../types/task";
-
-type TaskContextType = {
-	tasks: Task[];
-	addTask: (task: Omit<Task, "id" | "completed" | "clientId">) => void;
-	updateTask: (task: Task) => void;
-	deleteTask: (id: number) => void;
-	toggleTask: (id: number) => void;
-	getTaskById: (id: number) => Task | undefined;
-};
-
-const TaskContext = createContext<TaskContextType | undefined>(undefined);
+import { TaskContext } from "./taskContextCore";
 
 export function TaskProvider({ children }: { children: ReactNode }) {
 	// [STATE HOOKS]:
-	const [tasks, setTasks] = useState<Task[]>([
-		{
-			id: 1,
-			title: "Title #1",
-			completed: false,
-			description: "description...",
-			priority: "high",
-			clientId: "demo-user",
-		},
-		{
-			id: 2,
-			title: "Title #2",
-			completed: false,
-			description: "description...",
-			priority: "low",
-			clientId: "demo-user",
-		},
-	]);
+	const { user } = useAuth0();
+	const authUser = user as Auth0User | undefined;
+
+	const [tasks, setTasks] = useState<Task[]>([]);
 
 	// [CRUD FUNCTIONS]:
-	// = Create Task:
+	// = Add Task:
 	const addTask = (task: Omit<Task, "id" | "completed" | "clientId">) => {
 		const newTask: Task = {
 			id: Date.now(),
 			completed: false,
-			clientId: "demo-user",
+			clientId: authUser?.sub ?? "demo-user",
 			...task,
 		};
 		setTasks((prev) => [...prev, newTask]);
@@ -89,9 +67,4 @@ export function TaskProvider({ children }: { children: ReactNode }) {
 	);
 }
 
-export function useTaskContext() {
-	const context = useContext(TaskContext);
-	if (!context)
-		throw new Error("useTaskContext must be used within TaskProvider");
-	return context;
-}
+// Note: `useTaskContext` has been moved to `src/context/useTaskContext.tsx`

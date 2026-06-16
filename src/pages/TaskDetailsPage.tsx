@@ -1,6 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-// import type { Task } from "../types/task";
-import { useTaskContext } from "../context/TaskContext";
+import { useTaskContext } from "../context/useTaskContext";
 
 function TaskDetailsPage() {
 	const { id } = useParams();
@@ -24,7 +23,6 @@ function TaskDetailsPage() {
 	}
 	return (
 		<div className="container py-5">
-			{/* //// <h4 className="mt-5">Task Details</h4> */}
 			<div className="card shadow-sm p-4 mb-4">
 				<h4 className="mb-3">Task Details</h4>
 
@@ -46,12 +44,31 @@ function TaskDetailsPage() {
 					{task.completed ? "Completed" : "Active"}
 				</p>
 			</div>
-			<button
+			{/* <button
 				className="btn btn-sm btn-outline-secondary mt-3"
 				onClick={() => navigate("/")}
 			>
 				Back to Dashboard
-			</button>
+			</button> */}
+
+			{/* EDIT TASK BUTTON: */}
+			<div className="d-flex gap-2 mt-3">
+				<button
+					className="btn btn-sm btn-outline-primary"
+					onClick={() =>
+						navigate("/", { state: { editingTask: task } })
+					}
+				>
+					Edit Task
+				</button>
+
+				<button
+					className="btn btn-sm btn-outline-secondary"
+					onClick={() => navigate("/")}
+				>
+					Back to Dashboard
+				</button>
+			</div>
 		</div>
 	);
 }

@@ -41,6 +41,7 @@ function TaskForm({
 
 	function handleSubmit(e: React.FormEvent) {
 		e.preventDefault();
+		if (!title.trim()) return;
 		if (editingTask && onUpdateTask) {
 			onUpdateTask({
 				...editingTask,
@@ -72,6 +73,7 @@ function TaskForm({
 				placeholder="Title"
 				value={title}
 				onChange={(e) => setTitle(e.target.value)}
+				required
 			/>
 			<input
 				className="form-control col me-2"
@@ -95,7 +97,7 @@ function TaskForm({
 			</select>
 
 			<button
-				className="btn btn-success btn-sm col-auto ms-2"
+				className="btn btn-success btn-sm col-auto mx-2"
 				type="submit"
 			>
 				{editingTask ? "Update Task" : "Create Task"}
@@ -103,7 +105,7 @@ function TaskForm({
 
 			{editingTask && (
 				<button
-					className="btn btn-outline-secondary col-auto"
+					className="btn btn-sm btn-outline-secondary col-auto"
 					type="button"
 					onClick={() => setEditingTask(null)}
 				>

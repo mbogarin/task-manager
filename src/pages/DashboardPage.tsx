@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import type { Auth0User } from "../types/auth";
 import type { Task } from "../types/task";
-import { useTaskContext } from "../context/TaskContext";
+import { useTaskContext } from "../context/useTaskContext";
+import { useLocation } from "react-router-dom";
 
 // Reusable Components:
 import TaskCard from "../components/TaskCard";
@@ -10,6 +12,7 @@ import TaskForm from "../components/TaskForm";
 
 function DashboardPage() {
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	// [AUTHENTICATION HOOKS]:
 	const {
@@ -19,15 +22,23 @@ function DashboardPage() {
 	} = useAuth0();
 
 	// [STATE HOOKS]:
+	const authUser = user as Auth0User;
 	const { tasks, addTask, updateTask, deleteTask, toggleTask } =
 		useTaskContext();
 
 	// = State variables:
-	const [editingTask, setEditingTask] = useState<Task | null>(null);
+	const [editingTask, setEditingTask] = useState<Task | null>(
+		() =>
+			(location.state as { editingTask?: Task } | null)?.editingTask ??
+			null,
+	);
 	const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
-	const handleEditTask = (task) => {
-		setEditingTask(task);
-	};
+
+	useEffect(() => {
+		if (location.state?.editingTask) {
+			window.history.replaceState({}, document.title); // clear state
+		}
+	}, [location.state]);
 
 	// = EARLY RETURNS:
 	if (isLoading) {
@@ -50,7 +61,7 @@ function DashboardPage() {
 
 	// [FILTERING]:
 	// = Calculate Dashboard Statistics:
-	const userTasks = tasks.filter((task) => task.clientId === "demo-user");
+	const userTasks = tasks.filter((task) => task.clientId === authUser?.sub);
 
 	const totalTasks = userTasks.length;
 	const completedTasks = userTasks.filter((task) => task.completed).length;
@@ -128,9 +139,46 @@ function DashboardPage() {
 			<TaskForm
 				onAddTask={addTask}
 				onUpdateTask={updateTask}
-				editingTask={editingTask}
+				editingTask={null}
 				setEditingTask={setEditingTask}
 			/>
+
+			{/* EDIT MODAL: */}
+			{editingTask && (
+				<div
+					className="modal fade show d-block"
+					tabIndex={-1}
+					style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+					onClick={() => setEditingTask(null)}
+				>
+					<div
+						className="modal-dialog modal-lg"
+						onClick={(e) => e.stopPropagation()}
+					>
+						<div className="modal-content rounded-4 shadow-md border border-primary">
+							<div className="modal-header border-0  pb-0">
+								<h5 className="modal-title fw-semibold">
+									Edit Task
+								</h5>
+								<button
+									type="button"
+									className="btn-close"
+									onClick={() => setEditingTask(null)}
+								/>
+							</div>
+
+							<div className="modal-body pt-2">
+								<TaskForm
+									onAddTask={addTask}
+									onUpdateTask={updateTask}
+									editingTask={editingTask}
+									setEditingTask={setEditingTask}
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
 
 			{/* TASK LIST: */}
 			<div className="d-grid gap-2">
@@ -140,7 +188,7 @@ function DashboardPage() {
 						task={task}
 						onDelete={deleteTask}
 						onToggle={toggleTask}
-						onEdit={handleEditTask}
+						onEdit={setEditingTask}
 						onSelect={() => navigate(`/tasks/${task.id}`)}
 					/>
 				))}
