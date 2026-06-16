@@ -6,6 +6,7 @@ export interface Task {
 	completed: boolean;
 	description?: string;
 	priority?: Priority;
+	clientId?: string;
 }
 
-export type Priority = "low" | "medium" | "high" | "";
+export type Priority = "low" | "medium" | "high";
