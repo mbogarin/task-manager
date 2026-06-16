@@ -1,10 +1,12 @@
-// Imports:
+// [Imports]:
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import type { Task } from "./types/task";
 import TaskCard from "./components/TaskCard";
 import TaskForm from "./components/TaskForm";
 
-// App Component:
+// [App Component]:
 function App() {
 	// State variables:
 	const [editingTask, setEditingTask] = useState<Task | null>(null);
@@ -90,33 +92,57 @@ function App() {
 		return true;
 	});
 
+	// [RETURNED JSX]:
 	return (
-		<div>
-			<h1>Task Dashboard</h1>
+		<div className="container py-4">
+			<h1 className="mb-4 text-center">
+				<strong>Task Dashboard</strong>
+			</h1>
 
 			{/* Dashboard Statistics: */}
-			<div>
-				<p>Total Tasks: {totalTasks}</p>
-				<p>Completed Tasks: {completedTasks}</p>
-				<p>Active Tasks: {activeTasks}</p>
+			<div className="row mb-4 text-center">
+				<div className="col">
+					<div className="card p-2">Total Tasks: {totalTasks}</div>
+				</div>
+
+				<div className="col">
+					<div className="card p-2">
+						Completed Tasks: {completedTasks}
+					</div>
+				</div>
+
+				<div className="col">
+					<div className="card p-2">Active Tasks: {activeTasks}</div>
+				</div>
 			</div>
 
-			<div>
+			{/* Filter Buttons: */}
+			<div className="btn-group mb-3">
 				<button
 					onClick={() => setFilter("all")}
-					className={filter === "all" ? "active-filter" : ""}
+					className={`me-3 btn ${
+						filter === "all" ? "btn-primary" : "btn-outline-primary"
+					}`}
 				>
 					All
 				</button>
 				<button
 					onClick={() => setFilter("active")}
-					className={filter === "active" ? "active-filter" : ""}
+					className={`me-3 btn ${
+						filter === "active"
+							? "btn-primary"
+							: "btn-outline-primary"
+					}`}
 				>
 					Active
 				</button>
 				<button
 					onClick={() => setFilter("completed")}
-					className={filter === "completed" ? "active-filter" : ""}
+					className={`btn ${
+						filter === "completed"
+							? "btn-primary"
+							: "btn-outline-primary"
+					}`}
 				>
 					Completed
 				</button>
@@ -127,13 +153,12 @@ function App() {
 				onAddTask={addTask}
 				onUpdateTask={updateTask}
 				editingTask={editingTask}
-				// isEditing={isEditing}
 				setEditingTask={setEditingTask}
 			/>
 			{/* Task Details: */}
 			{selectedTask && (
 				<div>
-					<h2>Task Details</h2>
+					<h2 className="mt-5">Task Details</h2>
 
 					<p>
 						<strong>Title:</strong> {selectedTask.title}
@@ -154,23 +179,32 @@ function App() {
 						{selectedTask.completed ? "Completed" : "Active"}
 					</p>
 
-					<button onClick={() => setSelectedTask(null)}>Close</button>
+					<button
+						className="mb-5 btn btn-sm btn-outline-danger"
+						onClick={() => setSelectedTask(null)}
+					>
+						Close
+					</button>
 				</div>
 			)}
 
-			{/* Task Card: */}
-			{filteredTasks.map((task) => (
-				<TaskCard
-					key={task.id}
-					task={task}
-					onDelete={deleteTask}
-					onToggle={toggleTask}
-					onEdit={(task) => {
-						setEditingTask(task);
-					}}
-					onSelect={setSelectedTask}
-				/>
-			))}
+			{/* Task List: */}
+			<div className="row g-2">
+				{filteredTasks.map((task) => (
+					<div className="col-12">
+						<TaskCard
+							key={task.id}
+							task={task}
+							onDelete={deleteTask}
+							onToggle={toggleTask}
+							onEdit={(task) => {
+								setEditingTask(task);
+							}}
+							onSelect={setSelectedTask}
+						/>
+					</div>
+				))}
+			</div>
 		</div>
 	);
 }

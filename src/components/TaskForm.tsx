@@ -63,18 +63,21 @@ function TaskForm({
 		}
 	}
 	return (
-		<form onSubmit={handleSubmit}>
+		<form className="row g-2 align-items-center" onSubmit={handleSubmit}>
 			<input
+				className="form-control col me-2"
 				placeholder="Title"
 				value={title}
 				onChange={(e) => setTitle(e.target.value)}
 			/>
 			<input
+				className="form-control col me-2"
 				placeholder="Description"
 				value={description}
 				onChange={(e) => setDescription(e.target.value)}
 			/>
 			<select
+				className="form-select col"
 				value={priority}
 				onChange={(e) =>
 					setPriority(
@@ -88,13 +91,20 @@ function TaskForm({
 				<option value="high">High</option>
 			</select>
 
-			<button type="submit">
+			<button
+				className="btn btn-success col-auto ms-2 btn btn-sm btn-success"
+				type="submit"
+			>
 				{editingTask ? "Update Task" : "Create Task"}
 			</button>
 
 			{editingTask && (
-				<button type="button" onClick={() => setEditingTask(null)}>
-					Cancel Edit
+				<button
+					className="btn btn-outline-secondary col-auto"
+					type="button"
+					onClick={() => setEditingTask(null)}
+				>
+					Cancel
 				</button>
 			)}
 		</form>
