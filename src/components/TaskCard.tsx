@@ -16,17 +16,17 @@ function TaskCard({
 	onSelect,
 }: TaskCardProps) {
 	return (
-		<div className="card shadow-sm p-3 mb-2">
-			<h5 className="mb-1">{task.title}</h5>
-
-			{task.description && <p>{task.description}</p>}
-
+		<div className="card shadow-sm p-3 mb-4">
 			<span
-				className={`badge ${task.completed ? "bg-success" : "bg-warning text-dark"}`}
+				className={`mb-3 py-2 badge ${task.completed ? "bg-success" : "bg-warning text-dark"}`}
 			>
 				{" "}
-				{task.completed ? "Completed" : "Active"}
+				{task.completed ? "COMPLETED" : "ACTIVE"}
 			</span>
+
+			<h5 className="mb-1 fw-bold">{task.title}</h5>
+
+			{task.description && <p>{task.description}</p>}
 
 			{/* Action Buttons: */}
 			<div className="d-flex gap-2 mt-2">
@@ -41,7 +41,7 @@ function TaskCard({
 				</button>
 
 				<button
-					className="btn btn-sm btn-warning"
+					className="btn btn-sm btn-outline-warning"
 					onClick={(e) => {
 						e.stopPropagation();
 						onEdit(task);

@@ -4,7 +4,7 @@ import type { Task } from "../types/task";
 type CreateTask = {
 	title: string;
 	description?: string;
-	priority?: "low" | "medium" | "high" | "";
+	priority?: "low" | "medium" | "high";
 };
 
 type TaskFormProps = {
@@ -63,7 +63,10 @@ function TaskForm({
 		}
 	}
 	return (
-		<form className="row g-2 align-items-center" onSubmit={handleSubmit}>
+		<form
+			className="row g-2 align-items-center mb-4"
+			onSubmit={handleSubmit}
+		>
 			<input
 				className="form-control col me-2"
 				placeholder="Title"
@@ -92,7 +95,7 @@ function TaskForm({
 			</select>
 
 			<button
-				className="btn btn-success col-auto ms-2 btn btn-sm btn-success"
+				className="btn btn-success btn-sm col-auto ms-2"
 				type="submit"
 			>
 				{editingTask ? "Update Task" : "Create Task"}

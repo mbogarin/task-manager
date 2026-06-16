@@ -120,7 +120,7 @@ function App() {
 			<div className="btn-group mb-3">
 				<button
 					onClick={() => setFilter("all")}
-					className={`me-3 btn ${
+					className={`btn ${
 						filter === "all" ? "btn-primary" : "btn-outline-primary"
 					}`}
 				>
@@ -128,7 +128,7 @@ function App() {
 				</button>
 				<button
 					onClick={() => setFilter("active")}
-					className={`me-3 btn ${
+					className={`btn ${
 						filter === "active"
 							? "btn-primary"
 							: "btn-outline-primary"
@@ -160,24 +160,26 @@ function App() {
 				<div>
 					<h2 className="mt-5">Task Details</h2>
 
-					<p>
-						<strong>Title:</strong> {selectedTask.title}
-					</p>
-
-					{selectedTask.description && (
+					<div className="card shadow-sm p-3 mb-2">
 						<p>
-							<strong>Description:</strong>{" "}
-							{selectedTask.description}
+							<strong>Title:</strong> {selectedTask.title}
 						</p>
-					)}
-					<p>
-						<strong>Priority:</strong>{" "}
-						{selectedTask.priority || "None"}
-					</p>
-					<p>
-						<strong>Status:</strong>{" "}
-						{selectedTask.completed ? "Completed" : "Active"}
-					</p>
+
+						{selectedTask.description && (
+							<p>
+								<strong>Description:</strong>{" "}
+								{selectedTask.description}
+							</p>
+						)}
+						<p>
+							<strong>Priority:</strong>{" "}
+							{selectedTask.priority || "None"}
+						</p>
+						<p>
+							<strong>Status:</strong>{" "}
+							{selectedTask.completed ? "Completed" : "Active"}
+						</p>
+					</div>
 
 					<button
 						className="mb-5 btn btn-sm btn-outline-danger"
@@ -191,9 +193,8 @@ function App() {
 			{/* Task List: */}
 			<div className="row g-2">
 				{filteredTasks.map((task) => (
-					<div className="col-12">
+					<div className="col-12" key={task.id}>
 						<TaskCard
-							key={task.id}
 							task={task}
 							onDelete={deleteTask}
 							onToggle={toggleTask}
