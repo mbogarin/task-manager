@@ -8,6 +8,7 @@ type TaskCardProps = {
 	onSelect: (task: Task) => void;
 };
 
+// Resuable task card component:
 function TaskCard({
 	task,
 	onDelete,
@@ -16,10 +17,11 @@ function TaskCard({
 	onSelect,
 }: TaskCardProps) {
 	return (
+		// ! STYLE:
 		<div className="card shadow-sm p-3 mb-4">
 			{/* <div className="list-group-item d-flex justfiy content-between align-items-center"> */}
 
-			{/* BADGE (COMPLETED/ACTIVE): */}
+			{/* COMPLETION STATUS: */}
 			<span
 				className={`mb-3 py-2 badge ${task.completed ? "bg-success" : "bg-warning text-dark"}`}
 			>
@@ -27,17 +29,16 @@ function TaskCard({
 				{task.completed ? "COMPLETED" : "ACTIVE"}
 			</span>
 
-			{/* TASK DETAILS:: */}
+			{/* TASK DETAILS: */}
 			<div>
 				<h5 className="mb-1 fw-bold">{task.title}</h5>
-				{/* {task.description && <p>{task.description}</p>} */}
 				<p className="mb-1">{task.description}</p>
 				<small>Priority: {task.priority}</small>
 			</div>
 
 			{/* ACTION BUTTONS: */}
 			<div className="d-flex gap-2 mt-4">
-				{/* Toggle Button: */}
+				{/* 1. Status button: */}
 				<button
 					className="btn btn-sm btn-outline-success"
 					onClick={(e) => {
@@ -48,7 +49,7 @@ function TaskCard({
 					{task.completed ? "Mark Active" : "Mark Completed"}
 				</button>
 
-				{/* Edit Button: */}
+				{/* 2. Edit button: */}
 				<button
 					className="btn btn-sm btn-secondary"
 					onClick={(e) => {
@@ -59,7 +60,7 @@ function TaskCard({
 					Edit
 				</button>
 
-				{/* Delete Button: */}
+				{/* 3. Delete button: */}
 				<button
 					className="btn btn-sm btn-danger"
 					onClick={(e) => {
@@ -70,7 +71,7 @@ function TaskCard({
 					Delete
 				</button>
 
-				{/* View Details Button: */}
+				{/* 4. View details button: */}
 				<button
 					className="btn btn-sm btn-primary"
 					onClick={(e) => {

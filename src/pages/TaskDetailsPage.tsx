@@ -1,3 +1,5 @@
+// Provides more detailed view of an individual task:
+
 import { useParams, useNavigate } from "react-router-dom";
 import { useTaskContext } from "../context/useTaskContext";
 

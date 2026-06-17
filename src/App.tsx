@@ -1,34 +1,37 @@
 // [Imports]:
 import { Routes, Route } from "react-router-dom";
-// import { useState } from "react";
-// import { useAuth0 } from "@auth0/auth0-react";
+
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// import type { Task } from "./types/task";
-import { TaskProvider } from "./context/TaskContext";
 import Navbar from "./components/NavBar";
-
 import DashboardPage from "./pages/DashboardPage";
-// import CreateTaskPage from "./pages/CreateTaskPage";
 import TaskDetailsPage from "./pages/TaskDetailsPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+
+import { TaskProvider } from "./context/TaskContext";
 import AuthenticationGuard from "./services/AuthenticationGuard";
 
 function App() {
-	// [RETURNED JSX]:
+	// Returning JSX:
 	return (
 		<TaskProvider>
 			<Navbar />
 			<Routes>
+				{/* Login page: */}
 				<Route path="/" element={<LoginPage />} />
+
+				{/* Register page: */}
 				<Route path="/register" element={<RegisterPage />} />
+
+				{/* Dashboard page: (auth) */}
 				<Route
 					path="/dashboard"
 					element={<AuthenticationGuard component={DashboardPage} />}
 				/>
 
+				{/* Task Details page: (auth) */}
 				<Route
 					path="/tasks/:id"
 					element={

@@ -1,3 +1,5 @@
+// Checks whether a user is authenticated.
+
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, type ComponentType } from "react";
 import { useLocation } from "react-router-dom";
@@ -12,6 +14,7 @@ function AuthenticationGuard({
 	const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
 	const location = useLocation();
 
+	// Redirected to login page
 	useEffect(() => {
 		if (!isLoading && !isAuthenticated) {
 			loginWithRedirect({

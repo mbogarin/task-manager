@@ -1,4 +1,4 @@
-// = What does a task look like everywhere in my app?
+// Defines the structure of every task object.
 
 export interface Task {
 	id: number;
@@ -9,4 +9,5 @@ export interface Task {
 	clientId?: string;
 }
 
+// Priority type:
 export type Priority = "low" | "medium" | "high";

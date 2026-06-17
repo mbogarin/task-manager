@@ -1,10 +1,13 @@
+// MAIN TASK MANAGEMENT AREA:
+
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import { useAuth0 } from "@auth0/auth0-react";
+import { useTaskContext } from "../context/useTaskContext";
+
 import type { Auth0User } from "../types/auth";
 import type { Task } from "../types/task";
-import { useTaskContext } from "../context/useTaskContext";
-import { useLocation } from "react-router-dom";
 
 // Reusable Components:
 import TaskCard from "../components/TaskCard";
@@ -14,20 +17,22 @@ function DashboardPage() {
 	const navigate = useNavigate();
 	const location = useLocation();
 
-	// [AUTHENTICATION HOOKS]:
+	// Authentication hooks:
 	const { isLoading, user } = useAuth0();
-
-	// [STATE HOOKS]:
 	const authUser = user as Auth0User;
+
+	// State hooks:
 	const { tasks, addTask, updateTask, deleteTask, toggleTask } =
 		useTaskContext();
 
-	// = State variables:
+	// State variables:
 	const [editingTask, setEditingTask] = useState<Task | null>(
 		() =>
 			(location.state as { editingTask?: Task } | null)?.editingTask ??
 			null,
 	);
+
+	// Task filtering:
 	const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
 
 	useEffect(() => {
@@ -36,15 +41,12 @@ function DashboardPage() {
 		}
 	}, [location.state]);
 
-	// = EARLY RETURNS:
 	if (isLoading) {
 		return <div className="container py-4">Loading...</div>;
 	}
 
-	// [FILTERING]:
-	// = Calculate Dashboard Statistics:
+	// Calculate Dashboard Statistics:
 	const userTasks = tasks.filter((task) => task.clientId === authUser?.sub);
-
 	const totalTasks = userTasks.length;
 	const completedTasks = userTasks.filter((task) => task.completed).length;
 	const activeTasks = userTasks.filter((task) => !task.completed).length;
@@ -55,13 +57,13 @@ function DashboardPage() {
 		return true;
 	});
 
-	// [RETURNING JSX]:
+	// RETURNING JSX:
 	return (
 		<div className="container py-4">
 			{/* DASHBOARD: */}
 			<h1 className="mb-4">Task Dashboard</h1>
 
-			{/* stats Row: */}
+			{/* STATS ROW: */}
 			<div className="row mb-4 text-center">
 				<div className="col">
 					<div className="card p-2">
@@ -85,7 +87,7 @@ function DashboardPage() {
 				</div>
 			</div>
 
-			{/* TASK FILTER BUTTONS */}
+			{/* FILTER BUTTONS */}
 			<div className="btn-group mb-3">
 				<button
 					onClick={() => setFilter("all")}

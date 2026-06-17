@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { TaskContext } from "./taskContextCore";
 
+// Custom hook - to simplify access to the context
 export function useTaskContext() {
 	const context = useContext(TaskContext);
 	if (!context)

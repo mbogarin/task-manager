@@ -1,3 +1,5 @@
+// Task creation & editing form component:
+
 import { useState, useEffect } from "react";
 import type { Task } from "../types/task";
 
@@ -26,7 +28,7 @@ function TaskForm({
 		"",
 	);
 
-	// Sync form w/ editing task state:
+	// = Sync form w/ editing task state:
 	useEffect(() => {
 		if (editingTask) {
 			setTitle(editingTask.title);
@@ -39,6 +41,7 @@ function TaskForm({
 		}
 	}, [editingTask]);
 
+	// = Title validation:
 	function handleSubmit(e: React.FormEvent) {
 		e.preventDefault();
 		if (!title.trim()) return;
@@ -51,7 +54,6 @@ function TaskForm({
 			});
 
 			setEditingTask(null);
-
 			setTitle("");
 			setDescription("");
 			setPriority("");
@@ -64,10 +66,12 @@ function TaskForm({
 		}
 	}
 	return (
+		// = FORM (CREATING/EDITING):
 		<form
 			className="row g-2 align-items-center mb-4"
 			onSubmit={handleSubmit}
 		>
+			{/* 1. Title */}
 			<input
 				className="form-control col me-2"
 				placeholder="Title"
@@ -75,12 +79,14 @@ function TaskForm({
 				onChange={(e) => setTitle(e.target.value)}
 				required
 			/>
+			{/* 2. Description: */}
 			<input
 				className="form-control col me-2"
 				placeholder="Description"
 				value={description}
 				onChange={(e) => setDescription(e.target.value)}
 			/>
+			{/* Priority: */}
 			<select
 				className="form-select col"
 				value={priority}
@@ -96,6 +102,8 @@ function TaskForm({
 				<option value="high">High</option>
 			</select>
 
+			{/* FORM BUTTONS: */}
+			{/* 1. Create/Update buttons: */}
 			<button
 				className="btn btn-success btn-sm col-auto mx-2"
 				type="submit"
@@ -103,6 +111,7 @@ function TaskForm({
 				{editingTask ? "Update Task" : "Create Task"}
 			</button>
 
+			{/* 2. Cancel button: */}
 			{editingTask && (
 				<button
 					className="btn btn-sm btn-outline-secondary col-auto"

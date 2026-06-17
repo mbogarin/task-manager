@@ -1,3 +1,5 @@
+// Stores task-related data & allows components throughout app to share info without excessive prop drilling (Global State Management)
+
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -6,14 +8,14 @@ import type { Task } from "../types/task";
 import { TaskContext } from "./taskContextCore";
 
 export function TaskProvider({ children }: { children: ReactNode }) {
-	// [STATE HOOKS]:
+	// State hooks:
 	const { user } = useAuth0();
 	const authUser = user as Auth0User | undefined;
 
 	const [tasks, setTasks] = useState<Task[]>([]);
 
-	// [CRUD FUNCTIONS]:
-	// = Add Task:
+	// CRUD functions:
+	// 1, Create task:
 	const addTask = (task: Omit<Task, "id" | "completed" | "clientId">) => {
 		const newTask: Task = {
 			id: Date.now(),
@@ -24,7 +26,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
 		setTasks((prev) => [...prev, newTask]);
 	};
 
-	// = Update Task:
+	// 2. Update task:
 	const updateTask = (updatedTask: Task) => {
 		setTasks((prev) =>
 			prev.map((task) =>
@@ -33,12 +35,12 @@ export function TaskProvider({ children }: { children: ReactNode }) {
 		);
 	};
 
-	// = Delete Task:
+	// 3. Delete task:
 	const deleteTask = (id: number) => {
 		setTasks((prev) => prev.filter((task) => task.id !== id));
 	};
 
-	// = Toggle Task Completion:
+	// Completion Status:
 	const toggleTask = (id: number) => {
 		setTasks((prev) =>
 			prev.map((task) =>

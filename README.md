@@ -1,73 +1,136 @@
-# React + TypeScript + Vite
+### Task Management App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Author
 
-Currently, two official plugins are available:
+**Magali Bogarin**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+GitHub: https://github.com/mbogarin
 
-## React Compiler
+## Project Description
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The Task Management App is a React and TypeScript application that allows users to create, manage, update, and track tasks through an intuitive interface.
 
-## Expanding the ESLint configuration
+The application utilizes TypeScript for type safety, React Context API for global state management, React Router for navigation, and Auth0 for secure authentication and authorization.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Technologies Used
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- React
+- TypeScript
+- React Router
+- Context API
+- Auth0
+- Bootstrap
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Challenges Faced
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+One challenge during development was managing task data across multiple components while keeping the application organized and maintainable. This was solved by implementing the Context API and creating a custom hook to simplify access to shared task data.
+
+## Future Improvements
+
+- Persist tasks using a backend API
+- Add task due dates
+- Add task categories and filtering
+- Add search functionality
+- Implement task sorting options
+- Add user-specific task storage
+
+## Table of Contents
+
+- Project Description
+- Installation & Setup
+- Usage
+- Project Structure
+- Roadmap
+- Collaborators
+
+## Installation & Setup
+
+Clone the repository:
+
+```bash
+git clone https://github.com/mbogarin/task-manager.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Navigate into the project:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+````bash
+cd task-manager
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Install dependencies:
+```bash
+npm install
+````
+
+Create a .env file and add your Auth0 configuration values.
+
+Start the development server:
+
+```bash
+npm run dev
 ```
+
+## Usage
+
+Users can:
+
+- Register using Auth0
+- Log in securely
+- Create tasks
+- Edit tasks
+- Delete tasks
+- Mark tasks as completed
+- View task details
+- Access protected routes after authentication
+
+### Screenshots
+
+![Dashboard Screenshot](/images/dashboard.png)
+
+## Project Structure
+
+```bash
+task-manager/
+│
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── context/
+│   ├── types/
+│   ├── auth/
+│   └── App.tsx
+```
+
+## Roadmap
+
+Future enhancements include:
+
+- Backend database integration
+- Task filtering
+- Search functionality
+- User-specific task persistence
+- Due dates and reminders
+- Mobile-friendly improvements
+
+## Collaborators
+
+Currently this project was developed independently.
+
+Future collaborators can be listed here:
+
+### Credits
+
+Classmates and mentors at Coding Temple
+
+### How to Contribute
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push your branch
+5. Submit a pull request
+
+⸻
+
+## Notes
+
+This project was created as part of a Software Engineering Bootcamp to practice React, TypeScript, Context API, and Auth0 authentication concepts.
