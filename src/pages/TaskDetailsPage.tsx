@@ -52,7 +52,7 @@ function TaskDetailsPage() {
 				<button
 					className="btn btn-sm btn-outline-primary"
 					onClick={() =>
-						navigate("/", { state: { editingTask: task } })
+						navigate("/dashboard", { state: { editingTask: task } })
 					}
 				>
 					Edit Task

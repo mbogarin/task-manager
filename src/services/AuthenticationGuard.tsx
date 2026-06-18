@@ -14,21 +14,21 @@ function AuthenticationGuard({
 	const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
 	const location = useLocation();
 
-	// Redirected to login page
+	// = Redirected to login page
 	useEffect(() => {
-		if (!isLoading && !isAuthenticated) {
-			loginWithRedirect({
-				appState: {
-					returnTo: location.pathname + location.search,
-				},
-			});
-		}
+		if (isLoading || isAuthenticated) return;
+
+		loginWithRedirect({
+			appState: {
+				returnTo: location.pathname + location.search,
+			},
+		});
 	}, [
 		isAuthenticated,
 		isLoading,
+		loginWithRedirect,
 		location.pathname,
 		location.search,
-		loginWithRedirect,
 	]);
 
 	if (isLoading || !isAuthenticated) {

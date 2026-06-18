@@ -1,5 +1,6 @@
 // Defines the structure of every task object.
 
+// = Task interface:
 export interface Task {
 	id: number;
 	title: string;
@@ -9,5 +10,5 @@ export interface Task {
 	clientId?: string;
 }
 
-// Priority type:
+// = Priority type:
 export type Priority = "low" | "medium" | "high";

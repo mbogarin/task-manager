@@ -1,6 +1,6 @@
 // Task creation & editing form component:
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { Task } from "../types/task";
 
 type CreateTask = {
@@ -16,30 +16,28 @@ type TaskFormProps = {
 	setEditingTask: (task: Task | null) => void;
 };
 
+// = Reusable task form:
 function TaskForm({
 	onAddTask,
 	onUpdateTask,
 	editingTask,
 	setEditingTask,
 }: TaskFormProps) {
-	const [title, setTitle] = useState("");
-	const [description, setDescription] = useState("");
+	// = State management:
+	const [title, setTitle] = useState(editingTask?.title ?? "");
+	const [description, setDescription] = useState(
+		editingTask?.description ?? "",
+	);
 	const [priority, setPriority] = useState<"low" | "medium" | "high" | "">(
-		"",
+		editingTask?.priority ?? "",
 	);
 
-	// = Sync form w/ editing task state:
-	useEffect(() => {
-		if (editingTask) {
-			setTitle(editingTask.title);
-			setDescription(editingTask.description || "");
-			setPriority(editingTask.priority || "");
-		} else {
-			setTitle("");
-			setDescription("");
-			setPriority("");
-		}
-	}, [editingTask]);
+	// Reset form
+	const resetForm = () => {
+		setTitle("");
+		setDescription("");
+		setPriority("");
+	};
 
 	// = Title validation:
 	function handleSubmit(e: React.FormEvent) {
@@ -54,15 +52,14 @@ function TaskForm({
 			});
 
 			setEditingTask(null);
-			setTitle("");
-			setDescription("");
-			setPriority("");
+			resetForm();
 		} else {
 			onAddTask({
 				title,
 				description: description || undefined,
 				priority: priority || undefined,
 			});
+			resetForm();
 		}
 	}
 	return (
@@ -81,7 +78,7 @@ function TaskForm({
 			/>
 			{/* 2. Description: */}
 			<input
-				className="form-control col me-2"
+				className="form-control col me-4"
 				placeholder="Description"
 				value={description}
 				onChange={(e) => setDescription(e.target.value)}
@@ -105,7 +102,7 @@ function TaskForm({
 			{/* FORM BUTTONS: */}
 			{/* 1. Create/Update buttons: */}
 			<button
-				className="btn btn-success btn-sm col-auto mx-2"
+				className="btn btn-primary btn-sm col-auto mx-2"
 				type="submit"
 			>
 				{editingTask ? "Update Task" : "Create Task"}

@@ -7,26 +7,51 @@ import type { Auth0User } from "../types/auth";
 import type { Task } from "../types/task";
 import { TaskContext } from "./taskContextCore";
 
+// ! Mock Task Data:
+// const mockTasks: Task[] = [
+// 	{
+// 		id: 1,
+// 		title: "Build React project",
+// 		description: "Finish task manager app",
+// 		completed: true,
+// 		priority: "high",
+// 		clientId: "demo-user",
+// 	},
+// 	{
+// 		id: 2,
+// 		title: "Study TypeScript",
+// 		description: "Review interfaces & types",
+// 		completed: false,
+// 		priority: "low",
+// 		clientId: "demo-user",
+// 	},
+// ];
+
 export function TaskProvider({ children }: { children: ReactNode }) {
-	// State hooks:
+	// State Hooks:
 	const { user } = useAuth0();
 	const authUser = user as Auth0User | undefined;
 
+	// ! For testing purposes - state using mock tasks
+	// const [tasks, setTasks] = useState<Task[]>(mockTasks);
+
+	// = State Management (TASK DATA):
 	const [tasks, setTasks] = useState<Task[]>([]);
 
-	// CRUD functions:
+	// Task Operations:
 	// 1, Create task:
 	const addTask = (task: Omit<Task, "id" | "completed" | "clientId">) => {
 		const newTask: Task = {
 			id: Date.now(),
 			completed: false,
-			clientId: authUser?.sub ?? "demo-user",
+			clientId: authUser?.sub,
+			// clientId: authUser?.sub ?? "demo-user",
 			...task,
 		};
 		setTasks((prev) => [...prev, newTask]);
 	};
 
-	// 2. Update task:
+	// 2. Update Task:
 	const updateTask = (updatedTask: Task) => {
 		setTasks((prev) =>
 			prev.map((task) =>
@@ -49,7 +74,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
 		);
 	};
 
-	const getTaskById = (id: number) => {
+	const getTaskById = (id: number): Task | undefined => {
 		return tasks.find((task) => task.id === id);
 	};
 

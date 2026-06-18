@@ -1,11 +1,9 @@
-// MAIN TASK MANAGEMENT AREA:
+// MAIN TASK MANAGEMENT AREA
 
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-
 import { useAuth0 } from "@auth0/auth0-react";
 import { useTaskContext } from "../context/useTaskContext";
-
 import type { Auth0User } from "../types/auth";
 import type { Task } from "../types/task";
 
@@ -45,6 +43,9 @@ function DashboardPage() {
 		return <div className="container py-4">Loading...</div>;
 	}
 
+	// ! For testing purposes
+	// const userTasks = tasks.filter((task) => task.clientId === "demo-user");
+
 	// Calculate Dashboard Statistics:
 	const userTasks = tasks.filter((task) => task.clientId === authUser?.sub);
 	const totalTasks = userTasks.length;
@@ -57,7 +58,6 @@ function DashboardPage() {
 		return true;
 	});
 
-	// RETURNING JSX:
 	return (
 		<div className="container py-4">
 			{/* DASHBOARD: */}
@@ -153,6 +153,7 @@ function DashboardPage() {
 
 							<div className="modal-body pt-2">
 								<TaskForm
+									key={editingTask?.id ?? "new-task"}
 									onAddTask={addTask}
 									onUpdateTask={updateTask}
 									editingTask={editingTask}

@@ -1,3 +1,4 @@
+import type React from "react";
 import type { Task } from "../types/task";
 
 type TaskCardProps = {
@@ -8,7 +9,7 @@ type TaskCardProps = {
 	onSelect: (task: Task) => void;
 };
 
-// Resuable task card component:
+// = Resuable task card component:
 function TaskCard({
 	task,
 	onDelete,
@@ -16,70 +17,64 @@ function TaskCard({
 	onEdit,
 	onSelect,
 }: TaskCardProps) {
-	return (
-		// ! STYLE:
-		<div className="card shadow-sm p-3 mb-4">
-			{/* <div className="list-group-item d-flex justfiy content-between align-items-center"> */}
+	const handleAction = (
+		e: React.MouseEvent<HTMLButtonElement>,
+		action: () => void,
+	) => {
+		e.stopPropagation();
+		action();
+	};
 
-			{/* COMPLETION STATUS: */}
+	return (
+		<div className="card shadow-md p-3 mb-4 w-80">
+			{/*//= COMPLETION STATUS: */}
 			<span
-				className={`mb-3 py-2 badge ${task.completed ? "bg-success" : "bg-warning text-dark"}`}
+				style={{ width: "6rem" }}
+				className={`text-align-center mb-4 py-2 badge ${task.completed ? "bg-success" : "bg-warning text-dark"}`}
 			>
 				{" "}
 				{task.completed ? "COMPLETED" : "ACTIVE"}
 			</span>
 
-			{/* TASK DETAILS: */}
+			{/*//=  TASK DETAILS: */}
 			<div>
-				<h5 className="mb-1 fw-bold">{task.title}</h5>
-				<p className="mb-1">{task.description}</p>
-				<small>Priority: {task.priority}</small>
+				<h4 className="mb-2 fw-bold">{task.title}</h4>
+				<h6 className="mb-3">{task.description}</h6>
+				<small className="">Priority: {task.priority}</small>
 			</div>
 
-			{/* ACTION BUTTONS: */}
-			<div className="d-flex gap-2 mt-4">
-				{/* 1. Status button: */}
-				<button
-					className="btn btn-sm btn-outline-success"
-					onClick={(e) => {
-						e.stopPropagation();
-						onToggle(task.id);
-					}}
-				>
-					{task.completed ? "Mark Active" : "Mark Completed"}
-				</button>
-
-				{/* 2. Edit button: */}
+			{/*//= ACTION BUTTONS: */}
+			<div className="d-flex flex-wrap gap-2 mt-4">
+				{/* 1. Edit button: */}
 				<button
 					className="btn btn-sm btn-secondary"
-					onClick={(e) => {
-						e.stopPropagation();
-						onEdit(task);
-					}}
+					onClick={(e) => handleAction(e, () => onEdit(task))}
 				>
 					Edit
 				</button>
 
-				{/* 3. Delete button: */}
+				{/* 2. Delete button: */}
 				<button
 					className="btn btn-sm btn-danger"
-					onClick={(e) => {
-						e.stopPropagation();
-						onDelete(task.id);
-					}}
+					onClick={(e) => handleAction(e, () => onDelete(task.id))}
 				>
 					Delete
 				</button>
 
-				{/* 4. View details button: */}
+				{/* 3. View details button: */}
 				<button
 					className="btn btn-sm btn-primary"
-					onClick={(e) => {
-						e.stopPropagation();
-						onSelect(task);
-					}}
+					onClick={(e) => handleAction(e, () => onSelect(task))}
 				>
 					View
+				</button>
+
+				{/* 4. Status button: */}
+				<button
+					className="btn btn-sm btn-outline-success"
+					onClick={(e) => handleAction(e, () => onToggle(task.id))}
+				>
+					{task.completed ? "Mark Active" : "Mark Completed"}
 				</button>
 			</div>
 		</div>
