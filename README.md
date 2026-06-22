@@ -25,49 +25,59 @@ The application utilizes TypeScript for type safety, React Context API for globa
 
 One challenge during development was managing task data across multiple components while keeping the application organized and maintainable. This was solved by implementing the Context API and creating a custom hook to simplify access to shared task data.
 
-## Future Improvements
-
-- Persist tasks using a backend API
-- Add task due dates
-- Add task categories and filtering
-- Add search functionality
-- Implement task sorting options
-- Add user-specific task storage
-
 ## Table of Contents
 
-- Project Description
-- Installation & Setup
-- Usage
-- Project Structure
-- Roadmap
-- Collaborators
+- [Project Description](#project-description)
+
+- [Installation & Setup](#installation--setup)
+
+- [Usage](#usage)
+
+- [Roadmap](#roadmap)
+
+- [Collaborators](#collaborators)
+
+- [Project Structure](#project-structure)
 
 ## Installation & Setup
 
-Clone the repository:
+### 1. Clone the repository:
 
 ```bash
 git clone https://github.com/mbogarin/task-manager.git
 ```
 
-Navigate into the project:
+### 2. Navigate into the project directory:
 
-````bash
+```bash
 cd task-manager
+```
 
-Install dependencies:
+### 3. Install dependencies:
+
 ```bash
 npm install
-````
+```
 
-Create a .env file and add your Auth0 configuration values.
+### 4. Create a .env file and add your Auth0 configuration values.
 
-Start the development server:
+### 5. Start the development server:
 
 ```bash
 npm run dev
 ```
+
+### 6. Open the application
+
+Open your browser and navigate to:
+
+```text
+
+http://localhost:5173
+
+```
+
+---
 
 ## Usage
 
@@ -82,23 +92,42 @@ Users can:
 - View task details
 - Access protected routes after authentication
 
-### Screenshots
-
-![Dashboard Screenshot](/images/dashboard.png)
+---
 
 ## Project Structure
 
 ```bash
-task-manager/
+src/
+├── components/
+│   ├── LoginButton.tsx
+│   ├── LogoutButton.tsx
+│   ├── NavBar.tsx
+│   ├── TaskCard.tsx
+│   └── TaskForm.tsx
 │
-├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── context/
-│   ├── types/
-│   ├── auth/
-│   └── App.tsx
+├── context/
+│   ├── TaskContext.tsx
+│   ├── taskContextCore.ts
+│   └── useTaskContext.tsx
+│
+├── pages/
+│   ├── DashboardPage.tsx
+│   ├── LoginPage.tsx
+│   ├── RegisterPage.tsx
+│   └── TaskDetailsPage.tsx
+│
+├── services/
+│   └── AuthenticationGuard.tsx
+│
+├── types/
+│   ├── auth.ts
+│   └── task.ts
+│
+├── App.tsx
+└── main.tsx
 ```
+
+---
 
 ## Roadmap
 
@@ -111,6 +140,8 @@ Future enhancements include:
 - Due dates and reminders
 - Mobile-friendly improvements
 
+---
+
 ## Collaborators
 
 Currently this project was developed independently.
@@ -119,17 +150,9 @@ Future collaborators can be listed here:
 
 ### Credits
 
-Classmates and mentors at Coding Temple
+- Classmates and mentors at Coding Temple
 
-### How to Contribute
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push your branch
-5. Submit a pull request
-
-⸻
+---
 
 ## Notes
 
